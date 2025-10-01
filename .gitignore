@@ -1,0 +1,21 @@
+# Python specific ignores
+__pycache__/
+.pytest_cache/
+
+# Virtual environment folder
+env/
+
+# Environment variables file
+.env
+
+# Output and data folders
+outputs/
+transcripts/
+tests/
+
+# Font and Pickle files
+*.ttf
+*.pkl
+
+# Specific untracked files
+237C4C50
