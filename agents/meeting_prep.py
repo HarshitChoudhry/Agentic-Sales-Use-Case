@@ -82,12 +82,20 @@ class MeetingPreparationAgent:
         })
         response_text = response["text"] if isinstance(response, dict) else str(response)
 
-        result = {"Meeting_ID": meeting_id, "Client": client_name, "Output": response_text}
+        # ✅ Parse JSON to dict for prettified PDF
+        try:
+            parsed_output = json.loads(response_text)
+        except Exception:
+            parsed_output = {"raw_text": response_text}
 
-        # Save
+        result = {"Meeting_ID": meeting_id, "Client": client_name, "Output": parsed_output}
+
+        # Save Excel
         self.writer.append_to_excel(result, "meeting_guidance.xlsx", sheet_name="Guidance")
+
+        # Save Prep Pack PDF (beautified via OutputWriter)
         self.writer.write_to_pdf(
-            response_text,
+            parsed_output,
             f"{client_name}_{meeting_id}_prep.pdf",
             subfolder="prep_packs",
             meta={
@@ -97,5 +105,15 @@ class MeetingPreparationAgent:
                 "report_type": "Meeting Preparation Pack",
             },
         )
+
+        # Save follow-up draft text file
+        followup_path = os.path.join(
+            self.writer.base_dir, "followups", f"{client_name}_{meeting_id}_followup.txt"
+        )
+        with open(followup_path, "w", encoding="utf-8") as f:
+            if isinstance(parsed_output, dict) and "follow_up_draft" in parsed_output:
+                f.write(parsed_output["follow_up_draft"])
+            else:
+                f.write(response_text)
 
         return result
