@@ -4,7 +4,7 @@ from agents.faq_agent import FAQAgent
 from agents.coaching_agent import CoachingAgent
 from agents.deal_exec import DealExecutionAgent
 from utils.excel_handler import ExcelHandler
-from utils.calendar_handler import CalendarHandler
+# from utils.calendar_handler import CalendarHandler
 
 
 def process_client(client_name: str):
@@ -83,15 +83,31 @@ def run_pipeline(selected_clients=None):
 
 
 if __name__ == "__main__":
-    # --- Step 1: Sync calendar first ---
-    calendar_handler = CalendarHandler("meetings.xlsx")
-    events = calendar_handler.fetch_upcoming_events(days_ahead=3)
-    updated_clients = calendar_handler.add_to_meetings_excel(events)
 
-    # --- Step 2: Run pipeline ---
-    if not updated_clients:
-        print("No new calendar meetings found. Processing all clients.")
-        run_pipeline()
-    else:
-        print(f"Processing only updated clients from calendar: {updated_clients}")
-        run_pipeline(updated_clients)
+    run_pipeline()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # # --- Step 1: Sync calendar first ---
+    # calendar_handler = CalendarHandler("meetings.xlsx")
+    # events = calendar_handler.fetch_upcoming_events(days_ahead=3)
+    # updated_clients = calendar_handler.add_to_meetings_excel(events)
+
+    # # --- Step 2: Run pipeline ---
+    # if not updated_clients:
+    #     print("No new calendar meetings found. Processing all clients.")
+    #     run_pipeline()
+    # else:
+    #     print(f"Processing only updated clients from calendar: {updated_clients}")
+    #     run_pipeline(updated_clients)

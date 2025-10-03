@@ -13,10 +13,6 @@ Analyze the following sales call transcript and generate a coaching report.
 - Sales Reps: {reps}
 - Clients: {clients}
 
-## Best Practices Reference
-
----
-
 ## Scoring Framework
 Assign scores from 0–100 based on these rules:
 - **0–39 = Needs Improvement** (critical gap, poor execution)
