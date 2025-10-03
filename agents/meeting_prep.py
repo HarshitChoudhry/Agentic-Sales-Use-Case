@@ -21,7 +21,7 @@ class MeetingPreparationAgent:
         self.writer = OutputWriter()
         self.llm = ChatOpenAI(
             model=model,
-            temperature=0.3,
+            temperature=0.1,
             openai_api_key=os.getenv("OPENAI_API_KEY"),
         )
         self.chain = LLMChain(prompt=meeting_prep_prompt, llm=self.llm)
